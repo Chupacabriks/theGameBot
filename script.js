@@ -4,11 +4,21 @@
 function gameStart() {
   const randomInit = Math.floor(Math.random() * 100) + 1;
   console.log("Загаданное число:" + randomInit);
+  let attemptsLeft = 10;
 
-  function askUser() {
+  function game() {
+    if (attemptsLeft <= 0) {
+      const restart = confirm("Попытки закончились, хотите сыграть еще?");
+      if (restart) {
+        game();
+      } else {
+        alert("Спасибо за игру!")
+      }
+      return;
+    }
+
     const userInput = prompt("Угадай число от 1 до 100");
 
-    //проверяем на отмену
     if (userInput === null) {
       alert("Игра окончена");
       return;
@@ -25,16 +35,24 @@ function gameStart() {
     }
     //сравнение числа
     if (transformNumber === randomInit) {
-      alert(" Поздравляю, Вы угадали!!!");
+      const restart = confirm("Поздравляю, Вы угадали!!! Хотели бы сыграть еще?");
+      if (restart) {
+        gameStart();
+      } else {
+        alert("Спасибо за игру!");
+      }
       return;
-    } else if (transformNumber > randomInit) {
-      alert("Загаданное число меньше");
-    } else if (transformNumber < randomInit) {
-      alert("Загаданное число больше");
     }
-    askUser();
+    attemptsLeft--;
+
+    if (transformNumber > randomInit) {
+      alert(`Загаданное число меньше, осталось попыток: ${attemptsLeft}`);
+    } else if (transformNumber < randomInit) {
+      alert(`Загаданное число больше, осталось попыток: ${attemptsLeft}`);
+    }
+    game();
   }
-  askUser();
+  game();
 }
 
 gameStart();
