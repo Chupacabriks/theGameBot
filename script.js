@@ -30,7 +30,7 @@ function gameStart() {
     //проверяем на число 
     if (isNaN(transformNumber)) {
       alert("Введите число!");
-      askUser();
+      game();
       return;
     }
     //сравнение числа
